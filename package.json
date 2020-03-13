@@ -1,0 +1,14 @@
+{
+    "name": "typebot",
+    "version": "1.0.0",
+    "description": "A simple discord bot designed to help me learn typescript.",
+    "main": "dist/index.js",
+    "repository": "https://github.com/tempor1s/typebot",
+    "author": "Ben <benlaugherty@gmail.com>",
+    "license": "MIT",
+    "private": false,
+    "scripts": {
+        "start": "node dist/index.js"
+    },
+    "dependencies": {}
+}
