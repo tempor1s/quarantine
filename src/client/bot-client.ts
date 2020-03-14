@@ -1,6 +1,6 @@
 import { CommandHandler, ListenerHandler, AkairoClient } from 'discord-akairo'
-import { Message } from 'discord.js'
 import { join } from 'path'
+import { defaultPrefix, owners } from '../config'
 
 declare module 'discord-akairo' {
     interface AkairoClient {
@@ -12,13 +12,14 @@ declare module 'discord-akairo' {
 
 interface BotOptions {
     token?: string
+    onwers?: string | string[]
 }
 
 export default class BotClient extends AkairoClient {
     public commandHandler: CommandHandler = new CommandHandler(this, {
         directory: join(__dirname, '..', 'commands'),
-        prefix: process.env.PREFIX,
-        ignorePermissions: process.env.OWNER,
+        prefix: defaultPrefix,
+        ignorePermissions: owners,
         handleEdits: true,
         commandUtil: true,
         commandUtilLifetime: 3e5, // 5 minutes

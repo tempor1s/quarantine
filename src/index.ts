@@ -1,7 +1,6 @@
 require('dotenv').config()
 import BotClient from './client/bot-client'
-
-let token = process.env.DISORD_TOKEN
+import { token } from './config'
 
 const client = new BotClient({ token })
 

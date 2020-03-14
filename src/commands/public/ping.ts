@@ -17,7 +17,7 @@ export default class PingCommand extends Command {
 
     public exec(message: Message) {
         return message.util.reply(
-            `The ping of the latency of the API is: \`${this.client.ws.ping}ms\``
+            `The ping to the API is: \`${this.client.ws.ping}ms\``
         )
     }
 }
