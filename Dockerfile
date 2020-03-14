@@ -13,4 +13,6 @@ RUN npm run build
 
 COPY . ./
 
+EXPOSE 8080
+
 CMD [ "pm2-runtime", "dist/index.js" ]

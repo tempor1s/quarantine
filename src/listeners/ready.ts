@@ -12,5 +12,10 @@ export default class ReadyListener extends Listener {
 
     public exec(): void {
         log.info(`${this.client.user.tag} is online and ready.`)
+
+        // Set presence
+        this.client.user.setActivity(' through a hazmat suit.', {
+            type: 'WATCHING',
+        })
     }
 }

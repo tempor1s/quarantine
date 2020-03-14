@@ -13,5 +13,6 @@
             "ESNext.Intl",
             "ESNext.Symbol"
         ]
-    }
+    },
+    "exclude": ["node_modules", "./web"]
 }
