@@ -1,14 +1,15 @@
 {
-    "name": "typebot",
+    "name": "quarantine",
     "version": "1.0.0",
     "description": "A simple discord bot designed to help me learn typescript.",
     "main": "dist/index.js",
-    "repository": "https://github.com/tempor1s/typebot",
+    "repository": "https://github.com/tempor1s/quarantine",
     "author": "Ben <benlaugherty@gmail.com>",
     "license": "MIT",
     "private": false,
     "scripts": {
-        "start": "node dist/index.js"
+        "build": "tsc -p tsconfig.json",
+        "build:watch": "tsc -w -p tsconfig.json"
     },
     "dependencies": {
         "@types/node": "^13.9.1",
@@ -16,6 +17,7 @@
         "discord-akairo": "^8.0.0",
         "discord.js": "^12.0.2",
         "dotenv": "^8.2.0",
+        "typescript": "^3.8.3",
         "winston": "^3.2.1"
     }
 }
