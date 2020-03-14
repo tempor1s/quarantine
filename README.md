@@ -1,4 +1,3 @@
-# typebot
+# Quarantine
 
-Typebot is a simple discord bot that is designed to help me learn
-typescript.
+Quarantine is a bot that is designed to manage the discord server and integrate seamlessly with the dashboard.
