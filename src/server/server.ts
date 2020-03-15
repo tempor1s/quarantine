@@ -9,8 +9,7 @@ import {
     baseUrl,
     studentRoleId,
 } from '../config'
-import BotClient from '../client/bot-client'
-import { TextChannel, GuildMember, Guild, User, GuildChannel } from 'discord.js'
+import { TextChannel, GuildMember, Guild, User } from 'discord.js'
 
 const app = express()
 app.use(bodyParser.json())
