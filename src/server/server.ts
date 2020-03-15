@@ -24,6 +24,10 @@ module.exports = client => {
     let guildMember: GuildMember
 
     app.get('/', async function(req, res) {
+        res.send({ url: redirectUrl })
+    })
+
+    app.get('/api/verify', async function(req, res) {
         // Get the channel
         let channel = client.channels.cache.get(logChannel) as TextChannel
 
@@ -39,9 +43,7 @@ module.exports = client => {
 
         // Make sure its a valid user id
         if (String(uid).length !== 18) {
-            res.send(
-                'Error - Please use link sent to you in your DM or reach out to a staff member.'
-            )
+            res.send({ msg: 'UID required' })
         }
 
         let oauth2 = google.oauth2({ version: 'v1', auth: oauth2Client })
@@ -58,16 +60,17 @@ module.exports = client => {
             console.log(channel)
             channel.send(userInfo.data.email)
 
-            // log.info(userInfo.data.name)
-            res.send('Thanks for verifying! You can now close this tab.')
-
             // Reset
             uid = 0
             discordUser = null
             guildMember = null
+            auth = false
+
+            // log.info(userInfo.data.name)
+            res.send({ success: true })
         }
 
-        res.send(redirectUrl)
+        res.send({ url: redirectUrl })
     })
 
     app.get('/auth/google/callback', async function(req, res) {
@@ -83,16 +86,13 @@ module.exports = client => {
                 )
             }
 
-            // let channel = client.channels.cache.get(logchannel) as textchannel)
-            // let user = client.util.resolveuser(string(uid))
-
             // channel.send(`${user.tag} (${user.id}) has verified!`)
             discordUser.send('Thanks for verifiying! Have fun!')
 
             guildMember.roles.add(studentRoleId)
         }
 
-        res.redirect('/')
+        res.redirect('/api/verify')
     })
 }
 
