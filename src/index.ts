@@ -4,6 +4,6 @@ import { token } from './config'
 
 const client = new BotClient({ token })
 
-require('./server/server')(client)
+client.start().then(require('./server/server')(client))
 
-client.start()
+// require('./server/server')(client)

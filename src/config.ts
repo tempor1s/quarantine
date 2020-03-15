@@ -7,3 +7,4 @@ export let logChannel: string = process.env.LOG_CHANNEL
 export let googleClientId: string = process.env.GOOGLE_CLIENT_ID
 export let googleClientSecret: string = process.env.GOOGLE_CLIENT_SECRET
 export let baseUrl: string = process.env.BASE_URL
+export let studentRoleId = process.env.STUDENT_ROLE_ID

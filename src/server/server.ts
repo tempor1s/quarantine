@@ -7,25 +7,63 @@ import {
     googleClientId,
     googleClientSecret,
     baseUrl,
+    studentRoleId,
 } from '../config'
-import { TextChannel } from 'discord.js'
+import BotClient from '../client/bot-client'
+import { TextChannel, GuildMember, Guild, User, GuildChannel } from 'discord.js'
 
 const app = express()
 app.use(bodyParser.json())
 
+let auth = false
+let uid = 0
+
 module.exports = client => {
+    // Place Holders
+    let guild: Guild
+    let discordUser: User
+    let guildMember: GuildMember
+
     app.get('/', async function(req, res) {
-        res.send(redirectUrl)
-    })
-
-    app.get('/authed', async function(req, res) {
-        let oauth2 = google.oauth2({ version: 'v1', auth: oauth2Client })
-        let userInfo = await oauth2.userinfo.v2.me.get()
-
+        // Get the channel
         let channel = client.channels.cache.get(logChannel) as TextChannel
-        channel.send(userInfo.data.email)
 
-        res.send(userInfo.data.email)
+        if (!uid) {
+            console.log(channel)
+            uid = req.query.uid
+
+            guild = channel.guild
+
+            discordUser = client.users.cache.get(String(uid)) as User
+            guildMember = guild.member(discordUser)
+        }
+
+        // Make sure its a valid user id
+        if (String(uid).length !== 18) {
+            res.send(
+                'Error - Please use link sent to you in your DM or reach out to a staff member.'
+            )
+        }
+
+        let oauth2 = google.oauth2({ version: 'v1', auth: oauth2Client })
+
+        if (auth) {
+            // Reset auth so we only make 1 request
+            auth = false
+
+            // Get the info from good OAuth
+            let userInfo = await oauth2.userinfo.v2.me.get()
+
+            console.log(discordUser)
+
+            console.log(channel)
+            channel.send(userInfo.data.email)
+
+            // log.info(userInfo.data.name)
+            res.send(userInfo.data.email)
+        }
+
+        res.send(redirectUrl)
     })
 
     app.get('/auth/google/callback', async function(req, res) {
@@ -33,13 +71,29 @@ module.exports = client => {
         if (code) {
             let { tokens } = await oauth2Client.getToken(code)
             oauth2Client.setCredentials(tokens)
+            auth = true
+
+            if (String(uid).length !== 18) {
+                res.send(
+                    'Error - Please use link sent to you in your DM or reach out to a staff member.'
+                )
+            }
+
+            // let channel = client.channels.cache.get(logchannel) as textchannel)
+            // let user = client.util.resolveuser(string(uid))
+
+            // channel.send(`${user.tag} (${user.id}) has verified!`)
+            discordUser.send('Thanks for verifiying! Have fun!')
+
+            guildMember.roles.add(studentRoleId)
         }
-        res.redirect('/authed')
+
+        res.redirect('/')
     })
 }
 
 app.listen(8080, '0.0.0.0', () => {
-    console.log('Your app is listening on port 8080')
+    log.info('Server now listening on port 8080')
 })
 
 const oauth2Client = new google.auth.OAuth2(
@@ -51,11 +105,5 @@ const oauth2Client = new google.auth.OAuth2(
 const redirectUrl = oauth2Client.generateAuthUrl({
     access_type: 'offline',
     prompt: 'consent',
-    scope: ['email'],
+    scope: ['email', 'profile'],
 })
-
-// ====== WEB APP ======
-// TODO: Follow steps for production https://flaviocopes.com/how-to-serve-react-from-same-origin/
-app.get('/test', (_, res) => res.send('Test message'))
-
-console.log(redirectUrl)
