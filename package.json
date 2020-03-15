@@ -5,6 +5,7 @@
     "main": "dist/index.js",
     "repository": "https://github.com/tempor1s/quarantine",
     "author": "Ben <benlaugherty@gmail.com>",
+    "proxy": "http://localhost:8080",
     "license": "MIT",
     "private": false,
     "scripts": {
