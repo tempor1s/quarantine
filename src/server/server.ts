@@ -59,7 +59,12 @@ module.exports = client => {
             channel.send(userInfo.data.email)
 
             // log.info(userInfo.data.name)
-            res.send(userInfo.data.email)
+            res.send('Thanks for verifying! You can now close this tab.')
+
+            // Reset
+            uid = 0
+            discordUser = null
+            guildMember = null
         }
 
         res.send(redirectUrl)
