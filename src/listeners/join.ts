@@ -1,7 +1,7 @@
 import { Listener } from 'discord-akairo'
 import { GuildMember, TextChannel } from 'discord.js'
 import log from '../util/logger'
-import { logChannel } from '../config'
+import { logChannel, baseUrl } from '../config'
 
 export default class JoinListener extends Listener {
     public constructor() {
@@ -16,10 +16,10 @@ export default class JoinListener extends Listener {
         log.info(`${member.id} is now in the server.`)
 
         member.user.send(
-            `Thanks for joining the discord, we hope you enjoy your stay! :) - Student verification coming soon!`
+            `Welcome to Make School's Covid 19 Hideout - Please verify yourself here using your Make School email! ${baseUrl}?uid=${member.id}`
         )
 
         let channel = this.client.channels.cache.get(logChannel) as TextChannel
-        channel.send('Hi!')
+        channel.send(`${member.user.tag} (${member.id}) has joined the server.`)
     }
 }
