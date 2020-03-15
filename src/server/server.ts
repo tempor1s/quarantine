@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import { google } from 'googleapis'
 import bodyParser from 'body-parser'
 import log from '../util/logger'
@@ -12,6 +13,7 @@ import {
 import { TextChannel, GuildMember, Guild, User } from 'discord.js'
 
 const app = express()
+app.use(cors())
 app.use(bodyParser.json())
 
 let auth = false
@@ -23,7 +25,7 @@ module.exports = client => {
     let discordUser: User
     let guildMember: GuildMember
 
-    app.get('/', async function(req, res) {
+    app.get('/deleteme', async function(req, res) {
         res.send({ url: redirectUrl })
     })
 
@@ -67,7 +69,9 @@ module.exports = client => {
             auth = false
 
             // log.info(userInfo.data.name)
-            res.send({ success: true })
+            // TODO: figure out redirect back to react
+            // TODO: Create window popout?
+            res.send('Success, you can now close this tab')
         }
 
         res.send({ url: redirectUrl })
@@ -91,7 +95,6 @@ module.exports = client => {
 
             guildMember.roles.add(studentRoleId)
         }
-
         res.redirect('/api/verify')
     })
 }
@@ -103,7 +106,9 @@ app.listen(8080, '0.0.0.0', () => {
 const oauth2Client = new google.auth.OAuth2(
     googleClientId,
     googleClientSecret,
-    baseUrl + '/auth/google/callback'
+    // TODO: Fix me
+    // baseUrl + '/auth/google/callback'
+    'http://localhost:8080/auth/google/callback'
 )
 
 const redirectUrl = oauth2Client.generateAuthUrl({
