@@ -71,7 +71,7 @@ const Home: React.FC = () => {
                     touchControls: true,
                     minHeight: 200.00,
                     minWidth: 200.00,
-                    scale: 1.00,
+                    scale: 1.57,
                     size: 1.00
                 })
             );
@@ -92,7 +92,7 @@ const Home: React.FC = () => {
                     </VerifyHeader>
                     <VerifySubHeader>
                         Join fellow students and staff to 
-                        <span style={{textDecoration: 'line-through'}}> fight </span>
+                        <span style={{textDecoration: 'line-through', opacity: '.5'}}> fight </span>
                         hide from the virus.
                     </VerifySubHeader>
                     <VerifyLink href="">

@@ -54,4 +54,8 @@ const redirectUrl = oauth2Client.generateAuthUrl({
     scope: ['email'],
 })
 
+// ====== WEB APP ======
+// TODO: Follow steps for production https://flaviocopes.com/how-to-serve-react-from-same-origin/
+app.get('/test', (_, res) => res.send('Test message'))
+
 console.log(redirectUrl)
