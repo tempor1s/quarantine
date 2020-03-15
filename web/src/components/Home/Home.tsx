@@ -37,6 +37,12 @@ const VerifySubHeader = styled.p`
     color: #8f8f8f;
 `;
 
+const VerifyEmailMsg = styled.p`
+    color: #ff5656;
+    font-size: 16px;
+    margin: 30px 0px -25px;
+`;
+
 const VerifyLink = styled.a`
     text-decoration: none;
 `;
@@ -110,6 +116,9 @@ const Home: React.FC = (props) => {
                             </span>
                             hide from the virus.
                         </VerifySubHeader>
+                        <VerifyEmailMsg>
+                            You must use your Make School email!
+                        </VerifyEmailMsg>
                         <VerifyLink href={authLink} target='_blank'>
                             <VerifyBtn>Get quarantined now</VerifyBtn>
                         </VerifyLink>
