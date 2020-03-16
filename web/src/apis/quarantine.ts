@@ -1,5 +1,6 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'http://localhost:8080'
+    // TODO: Switch between prod/dev
+    baseURL: 'https://quarantine-api.dev.benlafferty.me'
 });
