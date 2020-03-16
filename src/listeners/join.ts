@@ -1,7 +1,7 @@
 import { Listener } from 'discord-akairo'
 import { GuildMember, TextChannel, MessageEmbed } from 'discord.js'
 import log from '../util/logger'
-import { logChannel, baseUrl } from '../config'
+import { logChannel, frontEndUrl } from '../config'
 
 export default class JoinListener extends Listener {
     public constructor() {
@@ -14,7 +14,7 @@ export default class JoinListener extends Listener {
 
     public exec(member: GuildMember): void {
         log.info(`${member.id} is now in the server.`)
-        let link = `${baseUrl}?uid=${member.id}`
+        let link = `${frontEndUrl}?uid=${member.id}`
 
         let embed = new MessageEmbed()
             .setTitle("Welcome to Make School's COVID-19 Hideout")

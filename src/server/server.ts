@@ -9,6 +9,7 @@ import {
     googleClientSecret,
     studentRoleId,
     staffRoleId,
+    apiUrl,
 } from '../config'
 import { TextChannel, GuildMember, Guild, User, MessageEmbed } from 'discord.js'
 
@@ -136,9 +137,7 @@ app.listen(8080, '0.0.0.0', () => {
 const oauth2Client = new google.auth.OAuth2(
     googleClientId,
     googleClientSecret,
-    // TODO: Fix me
-    // baseUrl + '/auth/google/callback'
-    'http://localhost:8080/auth/google/callback'
+    apiUrl + '/auth/google/callback'
 )
 
 const redirectUrl = oauth2Client.generateAuthUrl({
