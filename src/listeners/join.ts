@@ -1,5 +1,5 @@
 import { Listener } from 'discord-akairo'
-import { GuildMember, TextChannel } from 'discord.js'
+import { GuildMember, TextChannel, MessageEmbed } from 'discord.js'
 import log from '../util/logger'
 import { logChannel, baseUrl } from '../config'
 
@@ -14,10 +14,15 @@ export default class JoinListener extends Listener {
 
     public exec(member: GuildMember): void {
         log.info(`${member.id} is now in the server.`)
+        let link = `${baseUrl}?uid=${member.id}`
 
-        member.user.send(
-            `Welcome to Make School's Covid 19 Hideout - Please verify yourself here using your Make School email! ${baseUrl}?uid=${member.id}`
-        )
+        let embed = new MessageEmbed()
+            .setTitle("Welcome to Make School's COVID-19 Hideout")
+            .setDescription(
+                `Please verify yourself using your **Make Shool** email - ${link}`
+            )
+
+        member.user.send(embed)
 
         let channel = this.client.channels.cache.get(logChannel) as TextChannel
         channel.send(`${member.user.tag} (${member.id}) has joined the server.`)

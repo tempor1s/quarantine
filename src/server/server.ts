@@ -7,10 +7,9 @@ import {
     logChannel,
     googleClientId,
     googleClientSecret,
-    baseUrl,
     studentRoleId,
 } from '../config'
-import { TextChannel, GuildMember, Guild, User } from 'discord.js'
+import { TextChannel, GuildMember, Guild, User, MessageEmbed } from 'discord.js'
 
 const app = express()
 app.use(cors())
@@ -25,16 +24,11 @@ module.exports = client => {
     let discordUser: User
     let guildMember: GuildMember
 
-    app.get('/deleteme', async function(req, res) {
-        res.send({ url: redirectUrl })
-    })
-
     app.get('/api/verify', async function(req, res) {
         // Get the channel
         let channel = client.channels.cache.get(logChannel) as TextChannel
 
         if (!uid) {
-            console.log(channel)
             uid = req.query.uid
 
             guild = channel.guild
@@ -54,13 +48,26 @@ module.exports = client => {
             // Reset auth so we only make 1 request
             auth = false
 
+            discordUser.send('Thanks for verifiying! Have fun and stay safe!')
+
+            guildMember.roles.add(studentRoleId)
+
             // Get the info from good OAuth
             let userInfo = await oauth2.userinfo.v2.me.get()
 
-            console.log(discordUser)
+            let embed = new MessageEmbed()
+                .setTitle('User Verified')
+                .addFields(
+                    { name: 'Discord Username', value: guildMember.user.tag },
+                    { name: 'Discord ID', value: guildMember.id },
+                    { name: 'Real Name', value: userInfo.data.name },
+                    { name: 'Email', value: userInfo.data.email }
+                )
+            // send the embed
+            channel.send(embed)
 
-            console.log(channel)
-            channel.send(userInfo.data.email)
+            // Set their nickname
+            guildMember.setNickname(userInfo.data.name, ':)')
 
             // Reset
             uid = 0
@@ -89,11 +96,6 @@ module.exports = client => {
                     'Error - Please use link sent to you in your DM or reach out to a staff member.'
                 )
             }
-
-            // channel.send(`${user.tag} (${user.id}) has verified!`)
-            discordUser.send('Thanks for verifiying! Have fun!')
-
-            guildMember.roles.add(studentRoleId)
         }
         res.redirect('/api/verify')
     })
