@@ -1,6 +1,7 @@
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export default axios.create({
-    // TODO: Switch between prod/dev
-    baseURL: 'https://quarantine-api.dev.benlafferty.me'
+    baseURL: BASE_URL
 });

@@ -7,6 +7,11 @@ import CELLS from 'vanta/dist/vanta.cells.min';
 // @ts-ignore
 import Tilt from 'react-tilt';
 
+// =============================================
+// EXCUSE ALL @ts-ignore. We're still not sure
+// how to work with ts-react.
+// =============================================
+
 const Container = styled.div`
     height: 100vh;
 `;
@@ -57,17 +62,30 @@ const VerifyBtn = styled.button`
     border-radius: 8px;
     letter-spacing: 1px;
     font-weight: 500;
+    // @ts-ignore
     background-color: #fea100;
 
     &:hover {
         padding: 5px 24px;
-        background-color: #ffb73a;
+        opacity: 0.7;
     }
 `;
 
+const DisplayAuthBtn = (authLink: string) => {
+    return (
+        <>
+            <VerifyEmailMsg>You must use your Make School email!</VerifyEmailMsg>
+            <VerifyLink href={authLink} target='_blank'>
+                <VerifyBtn>Get quarantined now</VerifyBtn>
+            </VerifyLink>
+        </>
+    );
+};
+
 const Home: React.FC = (props) => {
     const [authLink, setAuthLink] = useState('');
-    // @ts-ignore -- idk React TS yet
+
+    // @ts-ignore
     const userID = queryString.parse(props.location.search);
     quarantine
         .get(`/api/verify?uid=${userID.uid}`)
@@ -116,12 +134,15 @@ const Home: React.FC = (props) => {
                             </span>
                             hide from the virus.
                         </VerifySubHeader>
-                        <VerifyEmailMsg>
-                            You must use your Make School email!
-                        </VerifyEmailMsg>
-                        <VerifyLink href={authLink} target='_blank'>
-                            <VerifyBtn>Get quarantined now</VerifyBtn>
-                        </VerifyLink>
+                        {userID.uid ? (
+                            DisplayAuthBtn(authLink)
+                        ) : (
+                            <>
+                                <VerifyLink href='https://discord.gg/xWAT4dM'>
+                                    <VerifyBtn>Join</VerifyBtn>
+                                </VerifyLink>
+                            </>
+                        )}
                     </VerifyOutline>
                 </Tilt>
             </VerifyContainer>
