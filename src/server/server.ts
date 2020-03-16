@@ -8,6 +8,7 @@ import {
     googleClientId,
     googleClientSecret,
     studentRoleId,
+    staffRoleId,
 } from '../config'
 import { TextChannel, GuildMember, Guild, User, MessageEmbed } from 'discord.js'
 
@@ -48,10 +49,6 @@ module.exports = client => {
             // Reset auth so we only make 1 request
             auth = false
 
-            discordUser.send('Thanks for verifiying! Have fun and stay safe!')
-
-            guildMember.roles.add(studentRoleId)
-
             // Get the info from good OAuth
             let userInfo = await oauth2.userinfo.v2.me.get()
 
@@ -63,11 +60,42 @@ module.exports = client => {
                     { name: 'Real Name', value: userInfo.data.name },
                     { name: 'Email', value: userInfo.data.email }
                 )
+
+            // Make sure that they are a Make School student or Staff
+            if (userInfo.data.email.includes('@students.makeschool.com')) {
+                // THe user is student
+                embed.addField('Student or Staff', 'Student')
+
+                guildMember.roles.add(studentRoleId)
+            } else if (userInfo.data.email.includes('@makeschool.com')) {
+                // The user is staff
+                embed.addField('Student or Staff', 'Staff')
+
+                guildMember.roles.add(staffRoleId)
+            } else {
+                // The user is not from Make School or did not use their Make School email
+                let msg =
+                    'Please use an @students.makeschool.com or @makeschool.com email to join - if you believe this was an error, DM Ben Lafferty on Slack'
+
+                discordUser.send(msg)
+
+                // Reset
+                uid = 0
+                discordUser = null
+                guildMember = null
+                auth = false
+
+                res.send(msg)
+            }
+
             // send the embed
             channel.send(embed)
 
-            // Set their nickname
+            // Set their nickname to their real name
             guildMember.setNickname(userInfo.data.name, ':)')
+
+            // alert the user that they have been verified
+            discordUser.send('Thanks for verifiying! Have fun and stay safe!')
 
             // Reset
             uid = 0
