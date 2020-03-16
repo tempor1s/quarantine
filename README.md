@@ -1,3 +1,3 @@
 # Quarantine
 
-Quarantine is a bot that is designed to manage the discord server and integrate seamlessly with the dashboard.
+Quarantine is a bot that is designed to manage the MS discord with all sorts of custom features!
