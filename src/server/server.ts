@@ -17,14 +17,13 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 
-let auth = false
-let uid = 0
-
 module.exports = client => {
     // Place Holders
     let guild: Guild
     let discordUser: User
     let guildMember: GuildMember
+    let uid = 0
+    let auth = false
 
     app.get('/api/verify', async function(req, res) {
         // Get the channel
