@@ -1,17 +1,17 @@
 import React from 'react';
+import { Router } from 'react-router-dom';
 // @ts-ignore
-import {GlobalStyle} from '../global-styles'
-import Home from './Home/Home'
-
-
+import { GlobalStyle } from '../global-styles';
+import history from '../history';
+import BaseRouter from '../router';
 
 const App: React.FC = () => {
     return (
-        <>
+        <Router history={history}>
             <GlobalStyle />
-            <Home/>
-        </>
-    )
-}
+            <BaseRouter />
+        </Router>
+    );
+};
 
 export default App;
