@@ -41,6 +41,7 @@ module.exports = client => {
         // Make sure its a valid user id
         if (String(uid).length !== 18) {
             res.send({ msg: 'UID required' })
+            return
         }
 
         let oauth2 = google.oauth2({ version: 'v1', auth: oauth2Client })
@@ -86,6 +87,7 @@ module.exports = client => {
                 auth = false
 
                 res.send(msg)
+                return
             }
 
             // send the embed
@@ -107,6 +109,7 @@ module.exports = client => {
             // TODO: figure out redirect back to react
             // TODO: Create window popout?
             res.send('Success, you can now close this tab')
+            return
         }
 
         res.send({ url: redirectUrl })
@@ -123,6 +126,7 @@ module.exports = client => {
                 res.send(
                     'Error - Please use link sent to you in your DM or reach out to a staff member.'
                 )
+                return
             }
         }
         res.redirect('/api/verify')
