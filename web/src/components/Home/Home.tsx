@@ -92,10 +92,8 @@ const Home: React.FC = (props) => {
         quarantine
             .get(`/api/verify?uid=${userID.uid}`)
             .then((res) => {
-                console.log('Hello from get request');
                 // @ts-ignore
                 setAuthLink(res.data.url);
-                console.log(res);
             })
             .catch((err) => {
                 console.log(err);
