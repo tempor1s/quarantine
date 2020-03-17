@@ -85,16 +85,22 @@ const DisplayAuthBtn = (authLink: string) => {
 const Home: React.FC = (props) => {
     const [authLink, setAuthLink] = useState('');
 
-    // @ts-ignore
-    const userID = queryString.parse(props.location.search);
-    quarantine
-        .get(`/api/verify?uid=${userID.uid}`)
-        .then((res) => {
-            setAuthLink(res.data.url);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    if (authLink === '') {
+        // @ts-ignore
+        const userID = queryString.parse(props.location.search);
+
+        quarantine
+            .get(`/api/verify?uid=${userID.uid}`)
+            .then((res) => {
+                console.log('Hello from get request');
+                // @ts-ignore
+                setAuthLink(res.data.url);
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
 
     const [vantaEffect, setVantaEffect] = useState(0);
     const myRef = useRef(null);
@@ -134,7 +140,7 @@ const Home: React.FC = (props) => {
                             </span>
                             hide from the virus.
                         </VerifySubHeader>
-                        {userID.uid ? (
+                        {authLink ? (
                             DisplayAuthBtn(authLink)
                         ) : (
                             <>
