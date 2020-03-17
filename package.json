@@ -28,6 +28,7 @@
         "winston": "^3.2.1"
     },
     "devDependencies": {
-        "@types/cors": "^2.8.6"
+        "@types/cors": "^2.8.6",
+        "@types/express-session": "^1.17.0"
     }
 }
