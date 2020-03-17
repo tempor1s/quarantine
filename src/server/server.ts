@@ -63,6 +63,7 @@ module.exports = client => {
                     { name: 'Real Name', value: userInfo.data.name },
                     { name: 'Email', value: userInfo.data.email }
                 )
+                .setFooter('https://github.com/tempor1s/quarantine')
 
             // Make sure that they are a Make School student or Staff
             if (userInfo.data.email.includes('@students.makeschool.com')) {

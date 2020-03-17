@@ -22,6 +22,7 @@ export default class JoinListener extends Listener {
             .setDescription(
                 `Please verify yourself using your **Make Shool** email - ${link}`
             )
+            .setFooter('https://github.com/tempor1s/quarantine')
 
         member.user.send(embed)
 
