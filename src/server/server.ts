@@ -13,10 +13,7 @@ import {
     apiUrl,
 } from '../config'
 import { TextChannel, GuildMember, Guild, User, MessageEmbed } from 'discord.js'
-import redis from 'redis'
-const redisStore = require('connect-redis')(session)
 
-const client = redis.createClient()
 const app = express()
 
 app.use(cors())
@@ -24,12 +21,6 @@ app.use(bodyParser.json())
 app.use(
     session({
         secret: 'a-very-secret-key',
-        store: new redisStore({
-            host: 'localhost',
-            port: 6379,
-            client: client,
-            ttl: 260,
-        }),
         resave: false,
         saveUninitialized: false,
     })
@@ -39,7 +30,6 @@ module.exports = client => {
     app.get('/api/verify', async function(req, res) {
         if (!req.session.uid) {
             req.session.uid = req.query.uid
-            console.log(req.session)
         }
 
         if (String(req.session.uid).length !== 18) {
@@ -128,7 +118,7 @@ module.exports = client => {
         })
 
         req.session.save(err => {
-            if (!err) {
+            if (err) {
                 console.log(err)
             }
 
