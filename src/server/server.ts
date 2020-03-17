@@ -13,54 +13,54 @@ import {
     apiUrl,
 } from '../config'
 import { TextChannel, GuildMember, Guild, User, MessageEmbed } from 'discord.js'
+import redis from 'redis'
+const redisStore = require('connect-redis')(session)
 
+const client = redis.createClient()
 const app = express()
+
 app.use(cors())
 app.use(bodyParser.json())
 app.use(
     session({
         secret: 'a-very-secret-key',
-        name: 'specialcookie',
+        store: new redisStore({
+            host: 'localhost',
+            port: 6379,
+            client: client,
+            ttl: 260,
+        }),
         resave: false,
         saveUninitialized: false,
-        cookie: {
-            httpOnly: false,
-            secure: false,
-        },
     })
 )
 
 module.exports = client => {
-    // Place Holders
-    let guild: Guild
-    let discordUser: User
-    let guildMember: GuildMember
-    let auth = false
-
     app.get('/api/verify', async function(req, res) {
-        // Get the channel
-        let channel = client.channels.cache.get(logChannel) as TextChannel
-
         if (!req.session.uid) {
             req.session.uid = req.query.uid
+            console.log(req.session)
         }
 
-        guild = channel.guild
-
-        discordUser = client.users.cache.get(String(req.session.uid)) as User
-        guildMember = guild.member(discordUser)
-
-        // Make sure its a valid user id
         if (String(req.session.uid).length !== 18) {
             res.send({ msg: 'UID required' })
             return
         }
 
+        // Make sure its a valid user id
         let oauth2 = google.oauth2({ version: 'v1', auth: oauth2Client })
 
-        if (auth) {
+        if (req.session.auth) {
             // Reset auth so we only make 1 request
-            auth = false
+            req.session.auth = false
+
+            // Get discord related things
+            let channel = client.channels.cache.get(logChannel) as TextChannel
+            let guild: Guild = channel.guild
+            let discordUser: User = client.users.cache.get(
+                String(req.session.uid)
+            ) as User
+            let guildMember: GuildMember = guild.member(discordUser)
 
             // Get the info from good OAuth
             let userInfo = await oauth2.userinfo.v2.me.get()
@@ -95,7 +95,6 @@ module.exports = client => {
                 // reset
                 discordUser = null
                 guildMember = null
-                auth = false
 
                 res.send(msg)
                 return
@@ -113,7 +112,6 @@ module.exports = client => {
             // Reset
             discordUser = null
             guildMember = null
-            auth = false
 
             // log.info(userInfo.data.name)
             // TODO: figure out redirect back to react
@@ -122,20 +120,34 @@ module.exports = client => {
             return
         }
 
-        res.send({ url: redirectUrl })
+        let redirectUrl = oauth2Client.generateAuthUrl({
+            access_type: 'offline',
+            prompt: 'consent',
+            scope: ['email', 'profile'],
+            state: req.session.uid,
+        })
+
+        req.session.save(err => {
+            if (!err) {
+                console.log(err)
+            }
+
+            res.send({ url: redirectUrl })
+        })
     })
 
     app.get('/auth/google/callback', async function(req, res) {
-        console.log('Callback Session: ', req.session.uid)
-        console.log('Set Session: ', req.session.uid)
         let code = req.query.code
+        let state = req.query.state
+
         if (code) {
             let { tokens } = await oauth2Client.getToken(code)
             oauth2Client.setCredentials(tokens)
-            auth = true
             req.session.auth = true
+            req.session.uid = state
         }
-        res.redirect('/api/verify')
+
+        res.redirect(`/api/verify?uid=${state}`)
     })
 }
 
@@ -148,9 +160,3 @@ const oauth2Client = new google.auth.OAuth2(
     googleClientSecret,
     apiUrl + '/auth/google/callback'
 )
-
-const redirectUrl = oauth2Client.generateAuthUrl({
-    access_type: 'offline',
-    prompt: 'consent',
-    scope: ['email', 'profile'],
-})
