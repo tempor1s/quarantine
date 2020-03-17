@@ -1,5 +1,4 @@
 import { Listener } from 'discord-akairo'
-import log from '../util/logger'
 import { TextChannel, User } from 'discord.js'
 
 export default class JoinListener extends Listener {

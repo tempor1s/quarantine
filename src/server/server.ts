@@ -82,10 +82,6 @@ module.exports = client => {
 
                 discordUser.send(msg)
 
-                // reset
-                discordUser = null
-                guildMember = null
-
                 res.send(msg)
                 return
             }
@@ -99,11 +95,6 @@ module.exports = client => {
             // alert the user that they have been verified
             discordUser.send('Thanks for verifiying! Have fun and stay safe!')
 
-            // Reset
-            discordUser = null
-            guildMember = null
-
-            // log.info(userInfo.data.name)
             // TODO: figure out redirect back to react
             // TODO: Create window popout?
             res.send('Success, you can now close this tab')
