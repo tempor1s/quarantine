@@ -142,7 +142,7 @@ const Home: React.FC = (props) => {
                             DisplayAuthBtn(authLink)
                         ) : (
                             <>
-                                <VerifyLink href='https://discord.gg/xWAT4dM'>
+                                <VerifyLink href='https://discord.gg/tZyaVyB'>
                                     <VerifyBtn>Join</VerifyBtn>
                                 </VerifyLink>
                             </>
