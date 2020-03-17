@@ -13,7 +13,8 @@ export default class JoinListener extends Listener {
     }
 
     public exec(member: GuildMember): void {
-        log.info(`${member.id} is now in the server.`)
+        log.info(`${member.user.tag} (${member.id}) has joined the server.`)
+
         let link = `${frontEndUrl}?uid=${member.id}`
 
         let embed = new MessageEmbed()
@@ -25,6 +26,8 @@ export default class JoinListener extends Listener {
         member.user.send(embed)
 
         let channel = this.client.channels.cache.get(logChannel) as TextChannel
-        channel.send(`${member.user.tag} (${member.id}) has joined the server.`)
+        channel.send(
+            `${member.user.tag} (${member.id}) has **joined** the server.`
+        )
     }
 }
