@@ -1,4 +1,5 @@
 import express from 'express'
+import session from 'express-session'
 import cors from 'cors'
 import { google } from 'googleapis'
 import bodyParser from 'body-parser'
@@ -16,31 +17,43 @@ import { TextChannel, GuildMember, Guild, User, MessageEmbed } from 'discord.js'
 const app = express()
 app.use(cors())
 app.use(bodyParser.json())
+app.use(
+    session({
+        secret: 'a-very-secret-key',
+        name: 'specialcookie',
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: false,
+            secure: false,
+        },
+    })
+)
 
 module.exports = client => {
     // Place Holders
     let guild: Guild
     let discordUser: User
     let guildMember: GuildMember
-    let uid = 0
     let auth = false
 
     app.get('/api/verify', async function(req, res) {
         // Get the channel
         let channel = client.channels.cache.get(logChannel) as TextChannel
 
-        if (!uid) {
-            uid = req.query.uid
-
-            guild = channel.guild
-
-            discordUser = client.users.cache.get(String(uid)) as User
-            guildMember = guild.member(discordUser)
+        if (!req.session.uid) {
+            req.session.uid = req.query.uid
         }
 
+        guild = channel.guild
+
+        discordUser = client.users.cache.get(String(req.session.uid)) as User
+        guildMember = guild.member(discordUser)
+
         // Make sure its a valid user id
-        if (String(uid).length !== 18) {
+        if (String(req.session.uid).length !== 18) {
             res.send({ msg: 'UID required' })
+            return
         }
 
         let oauth2 = google.oauth2({ version: 'v1', auth: oauth2Client })
@@ -79,13 +92,13 @@ module.exports = client => {
 
                 discordUser.send(msg)
 
-                // Reset
-                uid = 0
+                // reset
                 discordUser = null
                 guildMember = null
                 auth = false
 
                 res.send(msg)
+                return
             }
 
             // send the embed
@@ -98,7 +111,6 @@ module.exports = client => {
             discordUser.send('Thanks for verifiying! Have fun and stay safe!')
 
             // Reset
-            uid = 0
             discordUser = null
             guildMember = null
             auth = false
@@ -107,23 +119,21 @@ module.exports = client => {
             // TODO: figure out redirect back to react
             // TODO: Create window popout?
             res.send('Success, you can now close this tab')
+            return
         }
 
         res.send({ url: redirectUrl })
     })
 
     app.get('/auth/google/callback', async function(req, res) {
+        console.log('Callback Session: ', req.session.uid)
+        console.log('Set Session: ', req.session.uid)
         let code = req.query.code
         if (code) {
             let { tokens } = await oauth2Client.getToken(code)
             oauth2Client.setCredentials(tokens)
             auth = true
-
-            if (String(uid).length !== 18) {
-                res.send(
-                    'Error - Please use link sent to you in your DM or reach out to a staff member.'
-                )
-            }
+            req.session.auth = true
         }
         res.redirect('/api/verify')
     })
