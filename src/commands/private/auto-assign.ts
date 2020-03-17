@@ -50,15 +50,15 @@ export default class RoleAssignCommand extends Command {
             const m = Array.isArray(msg) ? msg[0] : msg
 
             m.react(RoleReactions.PYTHON)
-                .then(() => RoleReactions.JAVASCRIPT)
-                .then(() => RoleReactions.GO)
-                .then(() => RoleReactions.C)
-                .then(() => RoleReactions.CPLUSPLUS)
-                .then(() => RoleReactions.CSHARP)
-                .then(() => RoleReactions.JAVA)
-                .then(() => RoleReactions.RUBY)
-                .then(() => RoleReactions.SWIFT)
-                .then(() => RoleReactions.REACT)
+                .then(() => m.react(RoleReactions.JAVASCRIPT))
+                .then(() => m.react(RoleReactions.GO))
+                .then(() => m.react(RoleReactions.C))
+                .then(() => m.react(RoleReactions.CPLUSPLUS))
+                .then(() => m.react(RoleReactions.CSHARP))
+                .then(() => m.react(RoleReactions.JAVA))
+                .then(() => m.react(RoleReactions.RUBY))
+                .then(() => m.react(RoleReactions.SWIFT))
+                .then(() => m.react(RoleReactions.REACT))
         })
     }
 }
