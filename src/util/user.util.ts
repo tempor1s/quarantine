@@ -11,6 +11,10 @@ export enum DiscordRole {
     RUBY = '688169670469222455',
     SWIFT = '688169792842367026',
     REACT = '688180347980218369',
+    BEW = '688182070593454081',
+    FEW = '688181945879756803',
+    MOB = '688182340245389350',
+    DS = '688182262746841108',
 }
 
 export function isAdmin(user: GuildMember) {

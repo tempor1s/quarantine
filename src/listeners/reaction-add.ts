@@ -39,8 +39,23 @@ export default class ReactionAddListener extends Listener {
 
 function onRoleSelfAssignReact(messageReaction: MessageReaction, user: User) {
     let role: DiscordRole | undefined
+    console.log(messageReaction)
 
     switch (messageReaction.emoji.id) {
+        // Concentration roles
+        case RoleReactions.BEW:
+            role = DiscordRole.BEW
+            break
+        case RoleReactions.FEW:
+            role = DiscordRole.FEW
+            break
+        case RoleReactions.DS:
+            role = DiscordRole.DS
+            break
+        case RoleReactions.MOB:
+            role = DiscordRole.MOB
+            break
+        // Language specific
         case RoleReactions.PYTHON:
             role = DiscordRole.PYTHON
             break
@@ -61,10 +76,13 @@ function onRoleSelfAssignReact(messageReaction: MessageReaction, user: User) {
             break
         case RoleReactions.RUBY:
             role = DiscordRole.RUBY
+            break
         case RoleReactions.SWIFT:
             role = DiscordRole.SWIFT
+            break
         case RoleReactions.REACT:
             role = DiscordRole.REACT
+            break
         default:
             break
     }

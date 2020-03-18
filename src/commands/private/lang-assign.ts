@@ -3,13 +3,13 @@ import { Message, TextChannel, MessageEmbed } from 'discord.js'
 import { DiscordChannel } from '../../util/channel.util'
 import { RoleReactions } from '../../util/message.util'
 
-export default class RoleAssignCommand extends Command {
+export default class LanguageAutoAssign extends Command {
     public constructor() {
-        super('auto-assign', {
-            aliases: ['auto-assign'],
+        super('language-assign', {
+            aliases: ['language-assign'],
             category: 'Private',
             description: {
-                content: 'Setup the autorole command.',
+                content: 'Setup the autorole command for languages.',
                 examples: ['auto-assign'],
                 usages: 'auto-assign',
             },
@@ -30,9 +30,9 @@ export default class RoleAssignCommand extends Command {
         msg.delete()
 
         const embed = new MessageEmbed()
-            .setTitle('Role Self Assign')
+            .setTitle('Language Role Assignment')
             .setDescription(
-                'React to this role to either add or remove a roll to yourself'
+                'React to this message to either add or remove language a role from yourself'
             )
             .addField('Python', '<:py:688188532950696052>', true)
             .addField('JavaScript', '<:js:688188532971405313>', true)

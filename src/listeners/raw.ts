@@ -32,7 +32,7 @@ export default class JoinListener extends Listener {
         }
 
         channel.messages.fetch(packet.d.message_id).then(message => {
-            // Emojis can have identifiers of name:id format, so we have to accjount for that case as well
+            // Emojis can have identifiers of name:id format, so we have to account for that case as well
             const emoji = packet.d.emoji.id
                 ? `${packet.d.emoji.name}:${packet.d.emoji.id}`
                 : packet.d.emoji.name
