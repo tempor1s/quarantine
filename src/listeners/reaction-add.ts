@@ -39,7 +39,6 @@ export default class ReactionAddListener extends Listener {
 
 function onRoleSelfAssignReact(messageReaction: MessageReaction, user: User) {
     let role: DiscordRole | undefined
-    console.log(messageReaction)
 
     switch (messageReaction.emoji.id) {
         // Concentration roles
