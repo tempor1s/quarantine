@@ -31,6 +31,10 @@ export default class JoinListener extends Listener {
             return
         }
 
+        if (!packet.d.emoji) {
+            return
+        }
+
         channel.messages.fetch(packet.d.message_id).then(message => {
             // Emojis can have identifiers of name:id format, so we have to account for that case as well
             const emoji = packet.d.emoji.id
@@ -46,6 +50,10 @@ export default class JoinListener extends Listener {
                     packet.d.user_id,
                     <User>this.client.users.cache.get(packet.d.user_id)
                 )
+            }
+
+            if (!reaction) {
+                return
             }
 
             if (packet.t === 'MESSAGE_REACTION_ADD') {
