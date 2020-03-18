@@ -13,6 +13,8 @@ import {
     apiUrl,
 } from '../config'
 import { TextChannel, GuildMember, Guild, User, MessageEmbed } from 'discord.js'
+import { DiscordRole } from '../util/user.util'
+import students from './students.json'
 
 const app = express()
 
@@ -87,6 +89,13 @@ module.exports = client => {
                 return
             }
 
+            // Assign concentration role
+            let concRoleId = getConcRoleId(userInfo.data.email)
+
+            if (concRoleId) {
+                guildMember.roles.add(concRoleId)
+            }
+
             // send the embed
             channel.send(embed)
 
@@ -142,3 +151,28 @@ const oauth2Client = new google.auth.OAuth2(
     googleClientSecret,
     apiUrl + '/auth/google/callback'
 )
+
+function getConcRoleId(email: string): string {
+    let concentration = students[email]
+    let role: DiscordRole | undefined
+
+    switch (concentration) {
+        case 'BEW':
+            role = DiscordRole.BEW
+            break
+        case 'FEW':
+            role = DiscordRole.FEW
+            break
+        case 'DS':
+            role = DiscordRole.DS
+            break
+        case 'MOB':
+            role = DiscordRole.MOB
+            break
+        default:
+            break
+    }
+
+    console.log(role)
+    return role
+}
