@@ -54,6 +54,8 @@ module.exports = client => {
             ) as User
             let guildMember: GuildMember = guild.member(discordUser)
 
+            let roleToAdd: string
+
             // Get the info from good OAuth
             let userInfo = await oauth2.userinfo.v2.me.get()
 
@@ -72,12 +74,14 @@ module.exports = client => {
                 // THe user is student
                 embed.addField('Student or Staff', 'Student')
 
-                guildMember.roles.add(studentRoleId)
+                // guildMember.roles.add(studentRoleId)
+                roleToAdd = studentRoleId
             } else if (userInfo.data.email.includes('@makeschool.com')) {
                 // The user is staff
                 embed.addField('Student or Staff', 'Staff')
 
-                guildMember.roles.add(staffRoleId)
+                // guildMember.roles.add(staffRoleId)
+                roleToAdd = studentRoleId
             } else {
                 // The user is not from Make School or did not use their Make School email
                 let msg =
@@ -91,7 +95,6 @@ module.exports = client => {
 
             // Assign concentration role
             let concRoleId = getConcRoleId(userInfo.data.email)
-
             if (concRoleId) {
                 guildMember.roles.add(concRoleId)
             }
@@ -100,7 +103,9 @@ module.exports = client => {
             channel.send(embed)
 
             // Set their nickname to their real name
-            guildMember.setNickname(userInfo.data.name, ':)')
+            guildMember
+                .setNickname(userInfo.data.name, ':)')
+                .then(() => guildMember.roles.add(roleToAdd))
 
             // alert the user that they have been verified
             discordUser.send('Thanks for verifiying! Have fun and stay safe!')
