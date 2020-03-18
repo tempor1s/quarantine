@@ -10,8 +10,8 @@ export default class LanguageAutoAssign extends Command {
             category: 'Private',
             description: {
                 content: 'Setup the autorole command for languages.',
-                examples: ['auto-assign'],
-                usages: 'auto-assign',
+                examples: ['language-assign'],
+                usages: 'language-assign',
             },
             userPermissions: ['ADMINISTRATOR'],
             ratelimit: 3,
