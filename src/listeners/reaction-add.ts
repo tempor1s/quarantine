@@ -64,6 +64,9 @@ function onRoleSelfAssignReact(messageReaction: MessageReaction, user: User) {
         case RoleReactions.GO:
             role = DiscordRole.GO
             break
+        case RoleReactions.C:
+            role = DiscordRole.C
+            break
         case RoleReactions.CPLUSPLUS:
             role = DiscordRole.CPLUSPLUS
             break
@@ -92,10 +95,10 @@ function onRoleSelfAssignReact(messageReaction: MessageReaction, user: User) {
                 return
             }
 
-            if (user.roles.cache.has(role!)) {
-                user.roles.remove(role!)
+            if (user.roles.cache.has(role)) {
+                user.roles.remove(role)
             } else {
-                user.roles.add(role!)
+                user.roles.add(role)
             }
         })
     }
