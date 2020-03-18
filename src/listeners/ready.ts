@@ -1,5 +1,9 @@
 import { Listener } from 'discord-akairo'
+import { TextChannel } from 'discord.js'
+import { createConcEmbedAndReact } from '../commands/private/concen-assign'
+import { DiscordChannel } from '../util/channel.util'
 import log from '../util/logger'
+import { createLangEmbedAndReact } from '../commands/private/lang-assign'
 
 export default class ReadyListener extends Listener {
     public constructor() {
@@ -17,5 +21,16 @@ export default class ReadyListener extends Listener {
         this.client.user.setActivity(' through a hazmat suit.', {
             type: 'WATCHING',
         })
+
+        let channel = this.client.channels.cache.get(
+            DiscordChannel.ROLE_SELF_ASSIGN
+        )
+
+        if (!(channel instanceof TextChannel)) {
+            return
+        }
+
+        createConcEmbedAndReact(channel)
+        createLangEmbedAndReact(channel)
     }
 }

@@ -29,24 +29,28 @@ export default class ConcentrationAutoAssign extends Command {
 
         msg.delete()
 
-        const embed = new MessageEmbed()
-            .setTitle('Concentration Role Assignment')
-            .setDescription(
-                'React to this message to either add or remove a concentration role from yourself'
-            )
-            .addField('Back-End Web', '<:bew:689675211074830407>', true)
-            .addField('Front-End Web', '<:few:689674898515427366>', true)
-            .addField('Data Science', '<:ds:689674423107584032>', true)
-            .addField('Mobile', '<:mob:689674737982504991>', true)
-            .setFooter('https://github.com/tempor1s/quarantine')
-
-        msg.channel.send(embed).then(msg => {
-            const m = Array.isArray(msg) ? msg[0] : msg
-
-            m.react(RoleReactions.BEW)
-                .then(() => m.react(RoleReactions.FEW))
-                .then(() => m.react(RoleReactions.DS))
-                .then(() => m.react(RoleReactions.MOB))
-        })
+        createConcEmbedAndReact(msg.channel)
     }
+}
+
+export function createConcEmbedAndReact(channel: TextChannel) {
+    const embed = new MessageEmbed()
+        .setTitle('Concentration Role Assignment')
+        .setDescription(
+            'React to this message to either add or remove a concentration role from yourself'
+        )
+        .addField('Back-End Web', '<:bew:689675211074830407>', true)
+        .addField('Front-End Web', '<:few:689674898515427366>', true)
+        .addField('Data Science', '<:ds:689674423107584032>', true)
+        .addField('Mobile', '<:mob:689674737982504991>', true)
+        .setFooter('https://github.com/tempor1s/quarantine')
+
+    channel.send(embed).then(msg => {
+        const m = Array.isArray(msg) ? msg[0] : msg
+
+        m.react(RoleReactions.BEW)
+            .then(() => m.react(RoleReactions.FEW))
+            .then(() => m.react(RoleReactions.DS))
+            .then(() => m.react(RoleReactions.MOB))
+    })
 }
