@@ -24,13 +24,14 @@ export default class ReadyListener extends Listener {
 
         let channel = this.client.channels.cache.get(
             DiscordChannel.ROLE_SELF_ASSIGN
-        )
+        ) as TextChannel
 
-        if (!(channel instanceof TextChannel)) {
-            return
-        }
-
-        createConcEmbedAndReact(channel)
-        createLangEmbedAndReact(channel)
+        channel.messages
+            .fetch({ limit: 5 })
+            .then(fetched => {
+                channel.bulkDelete(fetched)
+            })
+            .then(() => createConcEmbedAndReact(channel))
+            .then(() => createLangEmbedAndReact(channel))
     }
 }
