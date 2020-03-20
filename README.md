@@ -55,16 +55,15 @@ channel.util.ts
 message.util.ts
 user.util.ts
 server.ts
-# rename .env.example to .env and set all values in there
+# rename .env.example to .env and fill all values in there
 .env
 ```
 
-To reiterate, this bot is not designed to be self hosted due to its nature, but I wish you luck if you try!
+To reiterate, this bot is not designed to be self hosted due to its nature of being extremly custom, but I wish you luck if you try!
 
 ## Running
 
 To get the bot running to do development or have your own version, you will need 3 terminals for 3 different commands. (Again, this bot was not designed for others to use.)
-
 ```bash
 # in the first terminal, compile and build the application
 tsc -w -p tsconfig.ts
@@ -74,4 +73,4 @@ nodemon dist/index.js or node dist/index.js
 cd web && yarn start or cd web && npm start
 ```
 
-Good luck getting it working for your configuration!
+Good luck getting it working for your server!
