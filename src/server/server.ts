@@ -108,7 +108,7 @@ module.exports = client => {
                 .then(() => guildMember.roles.add(roleToAdd))
 
             // alert the user that they have been verified
-            discordUser.send('Thanks for verifiying! Have fun and stay safe!')
+            discordUser.send('Thanks for verifying! Have fun and stay safe!')
 
             // TODO: figure out redirect back to react
             // TODO: Create window popout?

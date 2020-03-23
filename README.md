@@ -64,6 +64,7 @@ To reiterate, this bot is not designed to be self hosted due to its nature of be
 ## Running
 
 To get the bot running to do development or have your own version, you will need 3 terminals for 3 different commands. (Again, this bot was not designed for others to use.)
+
 ```bash
 # in the first terminal, compile and build the application
 tsc -w -p tsconfig.ts
