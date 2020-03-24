@@ -37,7 +37,7 @@ export function createLangEmbedAndReact(channel: TextChannel) {
     const embed = new MessageEmbed()
         .setTitle('Language Role Assignment')
         .setDescription(
-            'React to this message to either add or remove language a role from yourself'
+            'React to this message to either add or remove a language role from yourself'
         )
         .addField('Python', '<:py:688188532950696052>', true)
         .addField('JavaScript', '<:js:688188532971405313>', true)
