@@ -4,6 +4,7 @@ export enum DiscordRole {
     PYTHON = '688167533660078214',
     JAVASCRIPT = '688167663381643308',
     GO = '688169256898396175',
+    RUST = '696177063694041108',
     C = '688169952548618288',
     CPLUSPLUS = '688169534258937965',
     CSHARP = '688169387790041143',
@@ -22,5 +23,5 @@ export function isAdmin(user: GuildMember) {
 }
 
 export function hasRole(user: GuildMember, role: string) {
-    return user.roles.cache.some(r => r.id === role)
+    return user.roles.cache.some((r) => r.id === role)
 }

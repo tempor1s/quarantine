@@ -42,6 +42,7 @@ export function createLangEmbedAndReact(channel: TextChannel) {
         .addField('Python', '<:py:688188532950696052>', true)
         .addField('JavaScript', '<:js:688188532971405313>', true)
         .addField('Go', '<:go:688188532908621965>', true)
+        .addField('Rust', '<:rust:696177203356106762>', true)
         .addField('C', '<:c_:688188532417888356>', true)
         .addField('C++', '<:cPP:688188532904296499>', true)
         .addField('C#', '<:csharp:689594656203210813>', true)
@@ -51,12 +52,13 @@ export function createLangEmbedAndReact(channel: TextChannel) {
         .addField('React', '<:react:688290715876458528>', true)
         .setFooter('https://github.com/tempor1s/quarantine')
 
-    channel.send(embed).then(msg => {
+    channel.send(embed).then((msg) => {
         const m = Array.isArray(msg) ? msg[0] : msg
 
         m.react(RoleReactions.PYTHON)
             .then(() => m.react(RoleReactions.JAVASCRIPT))
             .then(() => m.react(RoleReactions.GO))
+            .then(() => m.react(RoleReactions.RUST))
             .then(() => m.react(RoleReactions.C))
             .then(() => m.react(RoleReactions.CPLUSPLUS))
             .then(() => m.react(RoleReactions.CSHARP))

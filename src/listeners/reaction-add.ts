@@ -64,6 +64,9 @@ function onRoleSelfAssignReact(messageReaction: MessageReaction, user: User) {
         case RoleReactions.GO:
             role = DiscordRole.GO
             break
+        case RoleReactions.RUST:
+            role = DiscordRole.RUST
+            break
         case RoleReactions.C:
             role = DiscordRole.C
             break
@@ -90,7 +93,7 @@ function onRoleSelfAssignReact(messageReaction: MessageReaction, user: User) {
     }
 
     if (role) {
-        messageReaction.message.guild.members.fetch(user).then(user => {
+        messageReaction.message.guild.members.fetch(user).then((user) => {
             if (!user) {
                 return
             }
