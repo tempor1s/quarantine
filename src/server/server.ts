@@ -28,8 +28,8 @@ app.use(
     })
 )
 
-module.exports = client => {
-    app.get('/api/verify', async function(req, res) {
+module.exports = (client) => {
+    app.get('/api/verify', async function (req, res) {
         if (!req.session.uid) {
             req.session.uid = req.query.uid
         }
@@ -74,14 +74,12 @@ module.exports = client => {
                 // THe user is student
                 embed.addField('Student or Staff', 'Student')
 
-                // guildMember.roles.add(studentRoleId)
                 roleToAdd = studentRoleId
             } else if (userInfo.data.email.includes('@makeschool.com')) {
                 // The user is staff
                 embed.addField('Student or Staff', 'Staff')
 
-                // guildMember.roles.add(staffRoleId)
-                roleToAdd = studentRoleId
+                roleToAdd = staffRoleId
             } else {
                 // The user is not from Make School or did not use their Make School email
                 let msg =
@@ -123,7 +121,7 @@ module.exports = client => {
             state: req.session.uid,
         })
 
-        req.session.save(err => {
+        req.session.save((err) => {
             if (err) {
                 console.log(err)
             }
@@ -132,7 +130,7 @@ module.exports = client => {
         })
     })
 
-    app.get('/auth/google/callback', async function(req, res) {
+    app.get('/auth/google/callback', async function (req, res) {
         let code = req.query.code
         let state = req.query.state
 
