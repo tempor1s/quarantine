@@ -43,6 +43,7 @@ export function createHouseEmbedAndReact(channel: TextChannel) {
         .addField('Gamindor', '<:gamindor:698002289805230150>', true)
         .addField('Justicin', '<:justicin:698002289964613712>', true)
         .addField('Growtherin', '<:growtherin:698002290719719489>', true)
+        .setFooter('https://github.com/tempor1s/quarantine')
 
     channel.send(embed).then((msg) => {
         const m = Array.isArray(msg) ? msg[0] : msg
