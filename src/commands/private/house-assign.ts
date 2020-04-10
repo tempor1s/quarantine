@@ -40,7 +40,7 @@ export function createHouseEmbedAndReact(channel: TextChannel) {
             'React to this message to either add or remove a house role from yourself.'
         )
         .addField('Codingclaw', '<:codingclaw:698002856841707640>', true)
-        .addField('Gamingdor', '<:gamindor:698002289805230150>', true)
+        .addField('Gamindor', '<:gamindor:698002289805230150>', true)
         .addField('Justicin', '<:justicin:698002289964613712>', true)
         .addField('Growtherin', '<:growtherin:698002290719719489>', true)
 
@@ -48,7 +48,7 @@ export function createHouseEmbedAndReact(channel: TextChannel) {
         const m = Array.isArray(msg) ? msg[0] : msg
 
         m.react(RoleReactions.CODINGCLAW)
-            .then(() => m.react(RoleReactions.GAMINGDOR))
+            .then(() => m.react(RoleReactions.GAMINDOR))
             .then(() => m.react(RoleReactions.JUSTICIN))
             .then(() => m.react(RoleReactions.GROWTHERIN))
     })

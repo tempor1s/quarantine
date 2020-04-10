@@ -92,8 +92,8 @@ function onRoleSelfAssignReact(messageReaction: MessageReaction, user: User) {
         case RoleReactions.CODINGCLAW:
             role = DiscordRole.CODINGCLAW
             break
-        case RoleReactions.GAMINGDOR:
-            role = DiscordRole.GAMINGDOR
+        case RoleReactions.GAMINDOR:
+            role = DiscordRole.GAMINDOR
             break
         case RoleReactions.JUSTICIN:
             role = DiscordRole.JUSTICIN
