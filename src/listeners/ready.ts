@@ -4,7 +4,6 @@ import { createConcEmbedAndReact } from '../commands/private/concen-assign'
 import { DiscordChannel } from '../util/channel.util'
 import log from '../util/logger'
 import { createLangEmbedAndReact } from '../commands/private/lang-assign'
-import { createHouseEmbedAndReact } from '../commands/private/house-assign'
 
 export default class ReadyListener extends Listener {
     public constructor() {
@@ -34,6 +33,5 @@ export default class ReadyListener extends Listener {
             })
             .then(() => createConcEmbedAndReact(channel))
             .then(() => createLangEmbedAndReact(channel))
-            .then(() => createHouseEmbedAndReact(channel))
     }
 }
