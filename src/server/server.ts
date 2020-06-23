@@ -131,7 +131,7 @@ module.exports = (client) => {
     })
 
     app.get('/auth/google/callback', async function (req, res) {
-        let code = req.query.code
+        let code = req.query.code.toString()
         let state = req.query.state
 
         if (code) {
