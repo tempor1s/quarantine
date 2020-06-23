@@ -28,6 +28,8 @@ export default class SarcasmCommand extends Command {
                 'Please specify a message to sarcastify.'
             )
 
+        message.delete()
+
         return message.util?.send(
             msg
                 .split('')
