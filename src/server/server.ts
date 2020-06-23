@@ -1,3 +1,4 @@
+import { AkairoClient } from 'discord-akairo'
 import express from 'express'
 import session from 'express-session'
 import cors from 'cors'
@@ -28,7 +29,7 @@ app.use(
     })
 )
 
-module.exports = (client) => {
+module.exports = (client: AkairoClient) => {
     app.get('/api/verify', async function (req, res) {
         if (!req.session.uid) {
             req.session.uid = req.query.uid
@@ -176,6 +177,5 @@ function getConcRoleId(email: string): string {
             break
     }
 
-    console.log(role)
     return role
 }
