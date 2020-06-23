@@ -1,4 +1,5 @@
-require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config()
 
 export let token: string = process.env.DISCORD_TOKEN
 export let owners: string[] = process.env.OWNERS.split(',')

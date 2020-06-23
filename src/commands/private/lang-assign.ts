@@ -14,7 +14,6 @@ export default class LanguageAutoAssign extends Command {
                 usages: 'language-assign',
             },
             userPermissions: ['ADMINISTRATOR'],
-            ratelimit: 3,
         })
     }
 

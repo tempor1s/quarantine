@@ -22,22 +22,6 @@ export default class BotClient extends AkairoClient {
         ignorePermissions: owners,
         handleEdits: true,
         commandUtil: true,
-        commandUtilLifetime: 3e5, // 5 minutes
-        defaultCooldown: 1e4, // 1 minute
-        argumentDefaults: {
-            prompt: {
-                modifyStart: (_, str): string =>
-                    `${str}\n\n Type \`cancel\` to cancel the command...`,
-                modifyRetry: (_, str): string =>
-                    `${str}\n\n Type \`cancel\` to cancel the command...`,
-                timeout: 'You took too long, the command has been cancelled.',
-                ended:
-                    'You exceeded the maximum amount of tries, the command has now been cancelled.',
-                retries: 3,
-                time: 3e4, // 30 seconds
-            },
-            otherwise: '',
-        },
     })
 
     public listenerHandler: ListenerHandler = new ListenerHandler(this, {
@@ -62,7 +46,9 @@ export default class BotClient extends AkairoClient {
             process: process,
         })
 
+        console.log('registering command handler')
         this.commandHandler.loadAll()
+        console.log('registering listener handler')
         this.listenerHandler.loadAll()
     }
 

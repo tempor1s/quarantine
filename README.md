@@ -4,7 +4,7 @@ Quarantine is a Discord Bot designed to manage the MS | Corvid-19 Hideout discor
 
 ## Live Deployment
 
-If you would like to check out the live deployment, you can check it out [here.](https://quarantine.dev.benlafferty.me)
+If you would like to check out the live deployment, you can check it out [here.](https://quarantine.dev.benl.dev)
 
 If you are a Make School student, you can join the discord at the above link, and see the bot in action when you get verified!
 

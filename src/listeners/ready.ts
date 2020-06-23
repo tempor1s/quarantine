@@ -26,12 +26,14 @@ export default class ReadyListener extends Listener {
             DiscordChannel.ROLE_SELF_ASSIGN
         ) as TextChannel
 
-        channel.messages
-            .fetch({ limit: 5 })
-            .then((fetched) => {
-                channel.bulkDelete(fetched)
-            })
-            .then(() => createConcEmbedAndReact(channel))
-            .then(() => createLangEmbedAndReact(channel))
+        if (channel) {
+            channel.messages
+                .fetch({ limit: 5 })
+                .then((fetched) => {
+                    channel.bulkDelete(fetched)
+                })
+                .then(() => createConcEmbedAndReact(channel))
+                .then(() => createLangEmbedAndReact(channel))
+        }
     }
 }

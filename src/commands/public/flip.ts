@@ -11,7 +11,6 @@ export default class FlipCommand extends Command {
                 examples: ['flip'],
                 usages: 'flip',
             },
-            ratelimit: 3,
         })
     }
 
