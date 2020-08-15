@@ -12,6 +12,8 @@ import {
     studentRoleId,
     staffRoleId,
     apiUrl,
+    juniorsRoleId,
+    seniorsRoleId,
 } from '../config'
 import { TextChannel, GuildMember, Guild, User, MessageEmbed } from 'discord.js'
 import { DiscordRole } from '../util/user.util'
@@ -72,7 +74,7 @@ module.exports = (client: AkairoClient) => {
 
             // Make sure that they are a Make School student or Staff
             if (userInfo.data.email.includes('@students.makeschool.com')) {
-                // THe user is student
+                // The user is student
                 embed.addField('Student or Staff', 'Student')
 
                 roleToAdd = studentRoleId
@@ -84,7 +86,7 @@ module.exports = (client: AkairoClient) => {
             } else {
                 // The user is not from Make School or did not use their Make School email
                 let msg =
-                    'Please use an @students.makeschool.com or @makeschool.com email to join - if you believe this was an error, DM Ben Lafferty on Slack'
+                    'Please use an @students.makeschool.com or @makeschool.com email to join - if you believe this was an error, DM @Ben on Slack'
 
                 discordUser.send(msg)
 
@@ -93,10 +95,14 @@ module.exports = (client: AkairoClient) => {
             }
 
             // Assign concentration role
-            let concRoleId = getConcRoleId(userInfo.data.email)
+            const concRoleId = getConcRoleId(userInfo.data.email)
             if (concRoleId) {
-                guildMember.roles.add(concRoleId)
+                await guildMember.roles.add(concRoleId)
             }
+
+            // Add them to the seniors or juniors role
+            const junOrSenRoleId = getJuniorOrSenior(userInfo.data.email)
+            await guildMember.roles.add(junOrSenRoleId)
 
             // send the embed
             channel.send(embed)
@@ -109,8 +115,6 @@ module.exports = (client: AkairoClient) => {
             // alert the user that they have been verified
             discordUser.send('Thanks for verifying! Have fun and stay safe!')
 
-            // TODO: figure out redirect back to react
-            // TODO: Create window popout?
             res.send('Success, you can now close this tab')
             return
         }
@@ -156,8 +160,8 @@ const oauth2Client = new google.auth.OAuth2(
     apiUrl + '/auth/google/callback'
 )
 
-function getConcRoleId(email: string): string {
-    let concentration = students[email]
+const getConcRoleId = (email: string) => {
+    const concentration = students[email]
     let role: DiscordRole | undefined
 
     switch (concentration) {
@@ -178,4 +182,16 @@ function getConcRoleId(email: string): string {
     }
 
     return role
+}
+
+const getJuniorOrSenior = (email: string): string => {
+    const exists = students[email]
+
+    // if the user exists, they are probably a senior
+    if (exists) {
+        return seniorsRoleId
+    }
+
+    // otherwise, they are prob a new junior
+    return juniorsRoleId
 }
