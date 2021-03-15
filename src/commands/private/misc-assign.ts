@@ -39,8 +39,10 @@ export function createMiscEmbedAndReact(channel: TextChannel) {
         .setDescription(
             'React to this message to either add or remove a misc role from yourself'
         )
-        .addField('Job Search', '<:linkedin:751181905759830096>', true)
-        .addField('Herbert Resident', '<:herbert:751244133548687500>', true)
+        .addFields(
+            { name: 'Job Search', value: '<:linkedin:751181905759830096>', inline: true },
+            { name: 'Herbert Resident', value: '<:herbert:751244133548687500>', inline: true }
+        )
         .setFooter('https://github.com/tempor1s/quarantine')
 
     channel.send(embed).then((msg) => {

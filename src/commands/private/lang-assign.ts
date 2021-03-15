@@ -38,17 +38,19 @@ export function createLangEmbedAndReact(channel: TextChannel) {
         .setDescription(
             'React to this message to either add or remove a language role from yourself'
         )
-        .addField('Python', '<:py:688188532950696052>', true)
-        .addField('JavaScript', '<:js:688188532971405313>', true)
-        .addField('Go', '<:go:688188532908621965>', true)
-        .addField('Rust', '<:rust:696177203356106762>', true)
-        .addField('C', '<:c_:688188532417888356>', true)
-        .addField('C++', '<:cPP:688188532904296499>', true)
-        .addField('C#', '<:csharp:689594656203210813>', true)
-        .addField('Java', '<:java:688188533231583328>', true)
-        .addField('Ruby', '<:ruby:689594656623034402>', true)
-        .addField('Swift', '<:swift:688188533013610504>', true)
-        .addField('React', '<:react:688290715876458528>', true)
+        .addFields(
+            { name: 'Python', value: '<:py:688188532950696052>', inline: true },
+            { name: 'JavaScript', value: '<:js:688188532971405313>', inline: true },
+            { name: 'Go', value: '<:go:688188532908621965>', inline: true },
+            { name: 'Rust', value: '<:rust:696177203356106762>', inline: true },
+            { name: 'C', value: '<:c_:688188532417888356>', inline: true },
+            { name: 'C++', value: '<:cPP:688188532904296499>', inline: true },
+            { name: 'C#', value: '<:csharp:689594656203210813>', inline: true },
+            { name: 'Java', value: '<:java:688188533231583328>', inline: true },
+            { name: 'Ruby', value: '<:ruby:689594656623034402>', inline: true },
+            { name: 'Swift', value: '<:swift:688188533013610504>', inline: true },
+            { name: 'React', value: '<:react:688290715876458528>', inline: true }
+        )
         .setFooter('https://github.com/tempor1s/quarantine')
 
     channel.send(embed).then((msg) => {
