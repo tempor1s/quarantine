@@ -39,10 +39,12 @@ export function createConcEmbedAndReact(channel: TextChannel) {
         .setDescription(
             'React to this message to either add or remove a concentration role from yourself'
         )
-        .addField('Back-End Web', '<:bew:689675211074830407>', true)
-        .addField('Front-End Web', '<:few:689674898515427366>', true)
-        .addField('Data Science', '<:ds:689674423107584032>', true)
-        .addField('Mobile', '<:mob:689674737982504991>', true)
+        .addFields(
+            { name: 'Back-End Web', value: '<:bew:689675211074830407>', inline: true },
+            { name: 'Front-End Web', value: '<:few:689674898515427366>', inline: true },
+            { name: 'Data Science', value: '<:ds:689674423107584032>', inline: true },
+            { name: 'Mobile', value: '<:mob:689674737982504991>', inline: true }
+        )
         .setFooter('https://github.com/tempor1s/quarantine')
 
     channel.send(embed).then(msg => {

@@ -39,9 +39,11 @@ export function createGameEmbedAndReact(channel: TextChannel) {
         .setDescription(
             'React to this message to either add or remove a game role from yourself'
         )
-        .addField('BR', '<:fortnite:751243633016963133>', true)
-        .addField('FPS', '<:valorant:751236857949585428>', true)
-        .addField('MOBA', '<:league:751237248586088548>', true)
+        .addFields(
+            { name: 'BR', value: '<:apex:821172946176835614>', inline: true },
+            { name: 'FPS', value: '<:valorant:751236857949585428>', inline: true },
+            { name: 'MOBA', value: '<:league:751237248586088548>', inline: true }
+        )
         .setFooter('https://github.com/tempor1s/quarantine')
 
     channel.send(embed).then((msg) => {
