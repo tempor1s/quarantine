@@ -40,7 +40,7 @@ export function createGameEmbedAndReact(channel: TextChannel) {
             'React to this message to either add or remove a game role from yourself'
         )
         .addFields(
-            { name: 'BR', value: '<:fortnite:751243633016963133>', inline: true },
+            { name: 'BR', value: '<:apex:821172946176835614>', inline: true },
             { name: 'FPS', value: '<:valorant:751236857949585428>', inline: true },
             { name: 'MOBA', value: '<:league:751237248586088548>', inline: true }
         )
