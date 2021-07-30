@@ -21,6 +21,7 @@ export enum DiscordRole {
     MOBA = '751253051364605952',
     FPS = '751253089360674946',
     BR = '751253145769869354',
+    EVENTS = '870573087077302322'
 }
 
 export function isAdmin(user: GuildMember) {

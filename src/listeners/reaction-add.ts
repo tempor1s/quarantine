@@ -99,11 +99,8 @@ function onRoleSelfAssignReact(messageReaction: MessageReaction, user: User) {
             role = DiscordRole.BR
             break
         // Misc specific
-        case RoleReactions.JOBSEARCH:
-            role = DiscordRole.JOBSEARCH
-            break
-        case RoleReactions.HERBERT:
-            role = DiscordRole.HERBERT
+        case RoleReactions.EVENTS:
+            role = DiscordRole.EVENTS
             break
         default:
             break
