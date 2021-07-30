@@ -74,9 +74,9 @@ const VerifyBtn = styled.button`
 const DisplayAuthBtn = (authLink: string) => {
     return (
         <>
-            <VerifyEmailMsg>You must use your Make School email!</VerifyEmailMsg>
+            <VerifyEmailMsg>You must use your Dominican email!</VerifyEmailMsg>
             <VerifyLink href={authLink} target='_blank'>
-                <VerifyBtn>Get quarantined now</VerifyBtn>
+                <VerifyBtn>Join now</VerifyBtn>
             </VerifyLink>
         </>
     );
@@ -127,16 +127,16 @@ const Home: React.FC = (props) => {
             <VerifyContainer>
                 <Tilt className='Tilt' options={{ max: 16, scale: 1 }}>
                     <VerifyOutline>
-                        <VerifyHeader>Make School COVID-19 Hideout</VerifyHeader>
+                        <VerifyHeader>Survivors of Make School</VerifyHeader>
                         <VerifySubHeader>
-                            Join fellow students and staff to
+                            Join fellow students and staff who
                             <span
                                 style={{ textDecoration: 'line-through', opacity: '.5' }}
                             >
                                 {' '}
-                                fight{' '}
+                                survived{' '}
                             </span>
-                            hide from the virus.
+                            Make School.
                         </VerifySubHeader>
                         {authLink ? (
                             DisplayAuthBtn(authLink)
