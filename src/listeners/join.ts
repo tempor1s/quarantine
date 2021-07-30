@@ -18,9 +18,9 @@ export default class JoinListener extends Listener {
         let link = `${frontEndUrl}?uid=${member.id}`
 
         let embed = new MessageEmbed()
-            .setTitle("Welcome to Make School's COVID-19 Hideout")
+            .setTitle("Welcome to the Make School Survivors Discord Server")
             .setDescription(
-                `Please verify yourself using your **Make Shool** email - ${link}`
+                `Please verify yourself using your **Dominican** email - ${link}`
             )
             .setFooter('https://github.com/tempor1s/quarantine')
 
