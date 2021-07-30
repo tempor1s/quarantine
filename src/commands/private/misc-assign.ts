@@ -35,21 +35,18 @@ export default class MiscAutoAssign extends Command {
 
 export function createMiscEmbedAndReact(channel: TextChannel) {
     const embed = new MessageEmbed()
-        .setTitle('Misc Role Assignment')
+        .setTitle('Events Role Assignment')
         .setDescription(
-            'React to this message to either add or remove a misc role from yourself'
+            'React to this message to be notified / remove notifications for events.'
         )
         .addFields(
-            { name: 'Job Search', value: '<:linkedin:751181905759830096>', inline: true },
-            { name: 'Herbert Resident', value: '<:herbert:751244133548687500>', inline: true }
+            { name: 'Events', value: '<:linkedin:751181905759830096>', inline: true },
         )
         .setFooter('https://github.com/tempor1s/quarantine')
 
     channel.send(embed).then((msg) => {
         const m = Array.isArray(msg) ? msg[0] : msg
 
-        m.react(RoleReactions.JOBSEARCH).then(() =>
-            m.react(RoleReactions.HERBERT)
-        )
+        m.react(RoleReactions.EVENTS)
     })
 }

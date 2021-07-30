@@ -38,14 +38,6 @@ export default class ReadyListener extends Listener {
                 .then(() => createLangEmbedAndReact(channel))
                 .then(() => createMiscEmbedAndReact(channel))
                 .then(() => createGameEmbedAndReact(channel))
-            // if (channel) {
-            //     await channel.bulkDelete(5)
-            //
-            //     createGameEmbedAndReact(channel)
-            //     createLangEmbedAndReact(channel)
-            //     createMiscEmbedAndReact(channel)
-            //     createGameEmbedAndReact(channel)
-            // }
         }
     }
 }

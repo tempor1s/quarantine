@@ -12,12 +12,8 @@ import {
     studentRoleId,
     staffRoleId,
     apiUrl,
-    juniorsRoleId,
-    seniorsRoleId,
 } from '../config'
 import { TextChannel, GuildMember, Guild, User, MessageEmbed } from 'discord.js'
-import { DiscordRole } from '../util/user.util'
-import students from './students.json'
 
 const app = express()
 
@@ -73,20 +69,20 @@ module.exports = (client: AkairoClient) => {
                 .setFooter('https://github.com/tempor1s/quarantine')
 
             // Make sure that they are a Make School student or Staff
-            if (userInfo.data.email.includes('@students.makeschool.com')) {
+            if (userInfo.data.email.includes('@students.dominican.edu')) {
                 // The user is student
                 embed.addField('Student or Staff', 'Student')
 
                 roleToAdd = studentRoleId
-            } else if (userInfo.data.email.includes('@makeschool.com')) {
+            } else if (userInfo.data.email.includes('@dominican.edu')) {
                 // The user is staff
                 embed.addField('Student or Staff', 'Staff')
 
                 roleToAdd = staffRoleId
             } else {
-                // The user is not from Make School or did not use their Make School email
-                let msg =
-                    'Please use an @students.makeschool.com or @makeschool.com email to join - if you believe this was an error, DM @Ben on Slack'
+                // the user did not use their dominican email
+                const msg =
+                    'Please use an @students.dominican.edu or @dominican.edu email to join - if you believe this was an error, DM a Discord Mod'
 
                 discordUser.send(msg)
 
@@ -94,23 +90,12 @@ module.exports = (client: AkairoClient) => {
                 return
             }
 
-            // Assign concentration role
-            const concRoleId = getConcRoleId(userInfo.data.email)
-            if (concRoleId) {
-                await guildMember.roles.add(concRoleId)
-            }
-
-            // Add them to the seniors or juniors role
-            const junOrSenRoleId = getJuniorOrSenior(userInfo.data.email)
-            await guildMember.roles.add(junOrSenRoleId)
-
             // send the embed
             channel.send(embed)
 
             // Set their nickname to their real name
-            guildMember
-                .setNickname(userInfo.data.name, ':)')
-                .then(() => guildMember.roles.add(roleToAdd))
+            await guildMember.setNickname(userInfo.data.name)
+            await guildMember.roles.add(roleToAdd)
 
             // alert the user that they have been verified
             discordUser.send('Thanks for verifying! Have fun and stay safe!')
@@ -159,39 +144,3 @@ const oauth2Client = new google.auth.OAuth2(
     googleClientSecret,
     apiUrl + '/auth/google/callback'
 )
-
-const getConcRoleId = (email: string) => {
-    const concentration = students[email]
-    let role: DiscordRole | undefined
-
-    switch (concentration) {
-        case 'BEW':
-            role = DiscordRole.BEW
-            break
-        case 'FEW':
-            role = DiscordRole.FEW
-            break
-        case 'DS':
-            role = DiscordRole.DS
-            break
-        case 'MOB':
-            role = DiscordRole.MOB
-            break
-        default:
-            break
-    }
-
-    return role
-}
-
-const getJuniorOrSenior = (email: string): string => {
-    const exists = students[email]
-
-    // if the user exists, they are probably a senior
-    if (exists) {
-        return seniorsRoleId
-    }
-
-    // otherwise, they are prob a new junior
-    return juniorsRoleId
-}
